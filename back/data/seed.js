@@ -48,15 +48,15 @@ async function seed() {
     console.log("3 clients ont été créés");
 
     // Créer des dates pour les réservations (timestamp Unix en secondes)
-    const today = Math.floor(Date.now() / 1000);
-    const tomorrow = today + 86400;
-    const dayAfterTomorrow = today + 172800;
+    // const today = Math.floor(Date.now() / 1000);
+    // const tomorrow = today + 86400;
+    // const dayAfterTomorrow = today + 172800;
 
     // Insérer les réservations pour chaque client
     await Booking.bulkCreate([
-      { date: today, client_id: 1, room_id: 1 },
-      { date: tomorrow, client_id: 2, room_id: 5 },
-      { date: dayAfterTomorrow, client_id: 3, room_id: 9 },
+      { date: 27022025, client_id: 1, room_id: 1 },
+      { date: 28022025, client_id: 2, room_id: 5 },
+      { date: 1032025, client_id: 3, room_id: 9 },
     ]);
     console.log("3 réservations ont été créées");
 
