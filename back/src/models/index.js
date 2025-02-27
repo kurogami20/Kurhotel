@@ -5,14 +5,14 @@ import Booking from "./bookingModel.js";
 
 Room.belongsToMany(Client, {
   through: Booking,
-  foreignKey: "client_id",
-  otherKey: "room_id",
+  foreignKey: "room_id",
+  otherKey: "client_id",
   as: "room",
 });
 Client.belongsToMany(Room, {
   through: Booking,
-  foreignKey: "room_id",
-  otherKey: "client_id",
+  foreignKey: "client_id",
+  otherKey: "room_id",
   as: "client",
 });
 export { sequelize, Room, Client, Booking };
