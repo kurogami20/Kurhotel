@@ -1,11 +1,11 @@
-import { Client } from "../models/index.js";
+import { Client, Booking } from "../models/index.js";
 import z, { date } from "zod";
 
 const clientController = {
   async findBook(req, res) {
     const data = req.body;
     const bookSchema = z.object({
-      lastname: z.string().nonempty(),
+      email: z.string().nonempty(),
       date: z.number().positive().min(1),
       client_id: z.number().positive().min(1),
       room_id: z.number().positive().min(1).optional(),
@@ -58,6 +58,43 @@ const clientController = {
       res.status(200).json(book);
     }
   },
-  async book(req, res) {},
+  async book(req, res) {
+    // cas si le visiteur etais déja client
+    const data = req.body;
+    const bookSchema = z.object({
+      lastname: z.string().nonempty(),
+      firstname: z.string().nonempty(),
+      email: z.string().nonempty(),
+      address: z.string().optional(),
+      phoneNumber: z.number().positive().min(1).optional(),
+      date: z.number().positive().min(1),
+      room_id: z.number().positive().min(1),
+    });
+
+    const verif = bookSchema.parse(data);
+    // on verifie si le client existe
+    const client = await Client.findOne({ where: { email: verif.email } });
+
+    if (!client) {
+      // on créée la résa et le client
+      await Client.create(verif);
+      const id = await Client.max("id");
+
+      const newBook = await Booking.create({
+        date: verif.date,
+        room_id: verif.room_id,
+        client_id: id,
+      });
+      res.json(newBook);
+    } else {
+      // on créée la résa
+      const newBook = await Booking.create({
+        date: verif.date,
+        room_id: verif.room_id,
+        client_id: client.id,
+      });
+      res.json(newBook);
+    }
+  },
 };
 export default clientController;

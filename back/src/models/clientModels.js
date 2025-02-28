@@ -8,6 +8,7 @@ Client.init(
     lastname: { type: DataTypes.TEXT, allowNull: false },
     firstname: { type: DataTypes.TEXT },
     address: { type: DataTypes.TEXT },
+    email: { type: DataTypes.TEXT },
     country: { type: DataTypes.TEXT },
     phoneNumber: { type: DataTypes.INTEGER },
   },

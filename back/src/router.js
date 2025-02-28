@@ -9,6 +9,7 @@ function room() {
 }
 function client() {
   router.get("/api/v1/booking", clientController.findBook);
+  router.post("/api/v1/booking", clientController.book);
 }
 
 client();
